@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="AutoChat:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="AutoChat.war">
+      <element id="artifact" artifact-name="AutoChat:war exploded" />
+    </root>
+  </artifact>
+</component>

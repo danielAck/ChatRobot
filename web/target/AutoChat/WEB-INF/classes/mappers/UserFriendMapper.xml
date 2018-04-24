@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AutoChat.dao.UserFriendMapper">
+  <resultMap id="BaseResultMap" type="AutoChat.pojo.UserFriend">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="userId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="user_friendId" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="friend_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="friend_note" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="sex" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="state" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, userId, user_friendId, friend_name, friend_note, sex, state
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_friend
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_friend
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="AutoChat.pojo.UserFriend">
+    insert into user_friend (id, userId, user_friendId, 
+      friend_name, friend_note, sex, state
+      )
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{userFriendid,jdbcType=VARCHAR}, 
+      #{friendName,jdbcType=VARCHAR}, #{friendNote,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
+      #{state,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="AutoChat.pojo.UserFriend">
+    insert into user_friend
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="userFriendid != null">
+        user_friendId,
+      </if>
+      <if test="friendName != null">
+        friend_name,
+      </if>
+      <if test="friendNote != null">
+        friend_note,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="userFriendid != null">
+        #{userFriendid,jdbcType=VARCHAR},
+      </if>
+      <if test="friendName != null">
+        #{friendName,jdbcType=VARCHAR},
+      </if>
+      <if test="friendNote != null">
+        #{friendNote,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="AutoChat.pojo.UserFriend">
+    update user_friend
+    <set>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="userFriendid != null">
+        user_friendId = #{userFriendid,jdbcType=VARCHAR},
+      </if>
+      <if test="friendName != null">
+        friend_name = #{friendName,jdbcType=VARCHAR},
+      </if>
+      <if test="friendNote != null">
+        friend_note = #{friendNote,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="AutoChat.pojo.UserFriend">
+    update user_friend
+    set userId = #{userid,jdbcType=INTEGER},
+      user_friendId = #{userFriendid,jdbcType=VARCHAR},
+      friend_name = #{friendName,jdbcType=VARCHAR},
+      friend_note = #{friendNote,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectState" parameterType="string" resultType="int">
+    SELECT state FROM user_friend
+    WHERE user_friendId = #{friendId}
+  </select>
+
+  <select id="selectByFriendId" parameterType="String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_friend
+    where user_friendId = #{friendId}
+  </select>
+
+  <select id="selectFriends" parameterType="Integer" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM user_friend
+    WHERE userId = #{userId}
+  </select>
+
+  <update id="changeState" parameterType="Integer">
+    UPDATE user_friend
+    SET state = #{state}
+    where id = #{id}
+  </update>
+</mapper>
